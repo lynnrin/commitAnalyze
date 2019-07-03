@@ -1,17 +1,15 @@
 import pandas as pd
 from git import *
 
-df = pd.read_csv('all_refactorings.csv', sep='#')
-df.drop(df.index[df['RefactoringType'] != 'Extract Method'], inplace=True)
-del df['RefactoringType']
-df = df.rename(columns={'BeforeClass': 'Class', 'BeforeMethod': 'Method'})
+df = pd.read_csv('refactoring.csv', sep='@|#')
+del df['method']
 
-df['parent'] = df['CommitId']
-df['1prev'] = df['CommitId']
-df['2prev'] = df['CommitId']
-df['3prev'] = df['CommitId']
-df['4prev'] = df['CommitId']
-df['5prev'] = df['CommitId']
+df['parent'] = df['commitId']
+df['1prev'] = df['commitId']
+df['2prev'] = df['commitId']
+df['3prev'] = df['commitId']
+df['4prev'] = df['commitId']
+df['5prev'] = df['commitId']
 
 
 def parent_commit(now, prev):
@@ -22,7 +20,7 @@ def parent_commit(now, prev):
 
 
 repo = Repo('ant/')
-parent_commit('CommitId', 'parent')
+parent_commit('commitId', 'parent')
 parent_commit('parent', '1prev')
 parent_commit('1prev', '2prev')
 parent_commit('2prev', '3prev')
